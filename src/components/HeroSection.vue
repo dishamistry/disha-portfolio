@@ -40,6 +40,17 @@ const showPhoto = ref(Boolean(profile.photo?.src))
             Contact me
           </a>
           <a
+            v-if="profile.resumeUrl"
+            :href="publicUrl(profile.resumeUrl)"
+            class="button button--secondary"
+            :download="profile.resumeFileName || ''"
+            type="application/pdf"
+          >
+            <BaseIcon name="download" :size="16" />
+            Download résumé
+            <span class="visually-hidden">(PDF)</span>
+          </a>
+          <a
             href="#projects"
             class="button"
             :class="profile.email ? 'button--secondary' : 'button--primary'"
@@ -47,15 +58,6 @@ const showPhoto = ref(Boolean(profile.photo?.src))
             View projects
           </a>
           <a href="#experience" class="button button--secondary">Experience</a>
-          <a
-            v-if="profile.resumeUrl"
-            :href="profile.resumeUrl"
-            class="button button--secondary"
-            download
-          >
-            <BaseIcon name="download" :size="16" />
-            Download résumé
-          </a>
         </div>
 
         <ul role="list" class="hero__links" aria-label="Profiles">

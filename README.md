@@ -51,10 +51,7 @@ The files in `src/data/` are the **single source of truth**. Components only rea
 - **Add a job**: add an object to `experience` in `experience.js`. Use `"YYYY-MM"` for `start`/`end`, and `end: null` for a current role. The list is sorted newest-first automatically.
 - **Add a project**: add an object to `projects.js`. Use `type: 'personal'` or `type: 'learning'`, and set `featured: false` to hide a project without deleting it.
 - **Add skills**: edit the `skills` arrays in `skills.js`. Groups with `context: 'learning'` are marked "In progress".
-- **Add your email or résumé PDF**: these weren't in the source résumé, so they're empty in `profile.js`:
-  - `email: 'you@example.com'` adds an Email card to the Contact section.
-  - `resumeUrl`: put the PDF in `public/` (e.g. `public/Disha-Mistry-Resume.pdf`) and set `resumeUrl: 'Disha-Mistry-Resume.pdf'`. This adds a "Download résumé" button to the hero. Use a relative path without a leading `/` so it works under the GitHub Pages sub-path.
-- **Certificates**: fill in `issuer` or `url` in `education.js` to show them.
+
 
 Empty fields are hidden automatically, so the site never shows a blank or broken link.
 

@@ -41,7 +41,8 @@ export const profile = {
   // Used by the hero "Contact me" button and the Contact section.
   // Set to '' to hide every email link on the site.
   email: 'mistrydisha1301@gmail.com',
-  resumeUrl: '', // e.g. a PDF placed in /public: 'Disha-Mistry-Resume.pdf'
+  resumeUrl: 'documents/resumeDisha.pdf',
+  resumeFileName: 'Disha-Mistry-Resume.pdf', // name used for the downloaded file
 
   links: [
     {

@@ -1,0 +1,83 @@
+/* Design tokens — change these to restyle the whole site. */
+:root {
+  /* Colour — light theme */
+  --color-bg: #fafaf9;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f4f4f2;
+  --color-text: #1c1917;
+  --color-text-muted: #57534e;
+  --color-text-subtle: #78716c;
+  --color-border: #e7e5e4;
+  --color-border-strong: #d6d3d1;
+  --color-accent: #0f766e;
+  --color-accent-hover: #115e59;
+  --color-accent-soft: #e6f2f0;
+  --color-accent-contrast: #ffffff;
+  --color-focus: #0f766e;
+  --color-header-bg: rgb(250 250 249 / 0.85);
+
+  /* Typography */
+  --font-sans: 'Segoe UI Variable Text', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, Consolas, monospace;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: clamp(1.5rem, 1.3rem + 0.8vw, 1.875rem);
+  --text-3xl: clamp(1.875rem, 1.5rem + 1.5vw, 2.5rem);
+  --text-display: clamp(2.5rem, 1.8rem + 3.2vw, 4.25rem);
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.35;
+  --leading-normal: 1.65;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-section: clamp(4rem, 3rem + 4vw, 7rem);
+
+  /* Layout */
+  --container-width: 72rem;
+  --container-padding: clamp(1rem, 0.5rem + 2.5vw, 2rem);
+  --header-height: 4rem;
+
+  /* Shape & motion */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgb(28 25 23 / 0.05);
+  --shadow-md: 0 6px 20px -8px rgb(28 25 23 / 0.15);
+  --transition: 160ms ease;
+}
+
+/* Colour — dark theme follows the visitor's system preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #121212;
+    --color-surface: #1a1a1a;
+    --color-surface-muted: #222222;
+    --color-text: #f0efed;
+    --color-text-muted: #b5b1ac;
+    --color-text-subtle: #98938d;
+    --color-border: #2c2c2c;
+    --color-border-strong: #3d3d3d;
+    --color-accent: #5eead4;
+    --color-accent-hover: #99f6e4;
+    --color-accent-soft: rgb(94 234 212 / 0.1);
+    --color-accent-contrast: #062925;
+    --color-focus: #5eead4;
+    --color-header-bg: rgb(18 18 18 / 0.85);
+    --shadow-sm: none;
+    --shadow-md: 0 6px 20px -8px rgb(0 0 0 / 0.6);
+  }
+}

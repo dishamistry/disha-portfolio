@@ -1,0 +1,44 @@
+# Dependencies (recreated with `npm install`)
+node_modules/
+
+# Build output (GitHub Actions builds the site itself)
+dist/
+dist-ssr/
+
+# Local environment variables — may contain secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Caches and tooling output
+.vite/
+.eslintcache
+.cache/
+coverage/
+*.tsbuildinfo
+
+# Editor and IDE files (keep shared VS Code recommendations)
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Operating system files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/

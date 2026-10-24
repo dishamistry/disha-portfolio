@@ -1,6 +1,7 @@
 <script setup>
 import { education, certifications } from '@/data/education'
 import PageSection from './PageSection.vue'
+import BaseIcon from './BaseIcon.vue'
 </script>
 
 <template>
@@ -26,15 +27,20 @@ import PageSection from './PageSection.vue'
         <h3 class="education__heading">Course certificates</h3>
         <ul role="list" class="education__list">
           <li v-for="item in certifications" :key="item.title" class="education__item card">
-            <p class="education__title">
-              <a v-if="item.url" :href="item.url" target="_blank" rel="noopener noreferrer">
-                {{ item.title }}
-                <span class="visually-hidden">(opens in a new tab)</span>
-              </a>
-              <template v-else>{{ item.title }}</template>
-            </p>
+            <p class="education__title">{{ item.title }}</p>
             <p v-if="item.issuer" class="education__detail">{{ item.issuer }}</p>
             <p v-if="item.year" class="education__date">{{ item.year }}</p>
+            <a
+              v-if="item.url"
+              :href="item.url"
+              class="education__link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ 'View certificate' }}
+              <BaseIcon name="arrow" :size="14" />
+              <span class="visually-hidden">for {{ item.title }} (opens in a new tab)</span>
+            </a>
           </li>
         </ul>
       </div>
@@ -83,6 +89,20 @@ import PageSection from './PageSection.vue'
   color: var(--color-text-subtle);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
+}
+
+.education__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.education__link:hover {
+  text-decoration: underline;
 }
 
 @media (min-width: 56rem) {

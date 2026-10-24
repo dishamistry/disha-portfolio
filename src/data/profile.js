@@ -31,8 +31,16 @@ export const profile = {
     'AI-assisted development & code review',
   ],
 
-  // Not included in the resume — add your details here to show them on the site.
-  email: '', // e.g. 'you@example.com'
+  // Profile photo shown in the hero. `src` is relative to the /public folder.
+  // Set `src: ''` to hide the photo.
+  photo: {
+    src: 'images/profile.jpg',
+    alt: 'Portrait of Disha Mistry',
+  },
+
+  // Used by the hero "Contact me" button and the Contact section.
+  // Set to '' to hide every email link on the site.
+  email: 'mistrydisha1301@gmail.com',
   resumeUrl: '', // e.g. a PDF placed in /public: 'Disha-Mistry-Resume.pdf'
 
   links: [

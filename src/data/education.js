@@ -17,25 +17,25 @@ export const education = [
 
 /**
  * These are completed training courses (not vendor certification exams).
- * Add `issuer` or `url` (e.g. a certificate link) if you want them shown.
+ * `url` adds a "View certificate" link; `linkLabel` overrides that link text.
  */
 export const certifications = [
   {
     title: 'Ultimate AWS Certified Cloud Practitioner CLF-C02',
-    issuer: '',
+    issuer: 'Udemy',
     year: '2025',
-    url: '',
+    url: 'https://www.udemy.com/certificate/UC-9dd047f5-cfab-434c-a537-153929f9bc2f/',
   },
   {
     title: 'Complete Vue Developer Bootcamp (Pinia, Vitest)',
-    issuer: '',
+    issuer: 'Udemy',
     year: '',
-    url: '',
+    url: 'https://www.udemy.com/certificate/UC-3d5b01a5-0ff2-437e-84af-a8967a8f6fee/',
   },
   {
     title: 'Symfony (PHP)',
-    issuer: '',
+    issuer: 'SymfonyCasts',
     year: '',
-    url: '',
+    url: 'https://symfonycasts.com/u/dishamistry130197',
   },
 ]

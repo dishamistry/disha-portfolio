@@ -1,7 +1,25 @@
 <script setup>
+import { onBeforeUnmount, ref } from 'vue'
 import { profile } from '@/data/profile'
 import PageSection from './PageSection.vue'
 import BaseIcon from './BaseIcon.vue'
+
+// '' | 'copied' | 'failed' — drives the button label and the screen-reader announcement.
+const copyStatus = ref('')
+let resetTimer
+
+async function copyEmail() {
+  try {
+    await navigator.clipboard.writeText(profile.email)
+    copyStatus.value = 'copied'
+  } catch {
+    copyStatus.value = 'failed'
+  }
+  clearTimeout(resetTimer)
+  resetTimer = setTimeout(() => (copyStatus.value = ''), 2500)
+}
+
+onBeforeUnmount(() => clearTimeout(resetTimer))
 </script>
 
 <template>
@@ -9,18 +27,31 @@ import BaseIcon from './BaseIcon.vue'
     id="contact"
     eyebrow="Contact"
     title="Let’s connect"
-    description="Connect with me on LinkedIn or browse my code on GitHub."
+    :description="
+      profile.email
+        ? 'Email me directly, connect with me on LinkedIn, or browse my code on GitHub.'
+        : 'Connect with me on LinkedIn or browse my code on GitHub.'
+    "
     muted
   >
     <ul role="list" class="contact">
       <li v-if="profile.email">
-        <a :href="`mailto:${profile.email}`" class="contact__item card">
+        <div class="contact__item contact__item--email card">
           <span class="contact__icon"><BaseIcon name="mail" :size="20" /></span>
           <span class="contact__text">
             <span class="contact__label">Email</span>
-            <span class="contact__value">{{ profile.email }}</span>
+            <a :href="`mailto:${profile.email}`" class="contact__value contact__email">{{ profile.email }}</a>
           </span>
-        </a>
+          <button type="button" class="contact__copy" @click="copyEmail">
+            <BaseIcon :name="copyStatus === 'copied' ? 'check' : 'copy'" :size="16" />
+            <span>{{ copyStatus === 'copied' ? 'Copied' : 'Copy' }}</span>
+            <span class="visually-hidden">email address</span>
+          </button>
+          <p class="visually-hidden" role="status" aria-live="polite">
+            <template v-if="copyStatus === 'copied'">Email address copied to clipboard.</template>
+            <template v-else-if="copyStatus === 'failed'">Couldn’t copy automatically. The email address is {{ profile.email }}.</template>
+          </p>
+        </div>
       </li>
       <li v-for="link in profile.links" :key="link.url">
         <a :href="link.url" class="contact__item card" target="_blank" rel="noopener noreferrer">
@@ -112,9 +143,48 @@ a.contact__item:hover .contact__arrow {
   transform: translate(2px, -2px);
 }
 
+.contact__item--email:focus-within {
+  border-color: var(--color-accent);
+}
+
+.contact__email {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.contact__email:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+}
+
+.contact__copy {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 2.25rem;
+  margin-left: auto;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color var(--transition),
+    color var(--transition);
+}
+
+.contact__copy:hover {
+  border-color: var(--color-text-subtle);
+  color: var(--color-text);
+}
+
 @media (min-width: 48rem) {
   .contact {
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 </style>

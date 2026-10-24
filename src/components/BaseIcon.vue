@@ -19,6 +19,8 @@ const strokes = {
   download: ['M12 4v11', 'm7 10 5 5 5-5', 'M5 20h14'],
   menu: ['M4 7h16', 'M4 12h16', 'M4 17h16'],
   close: ['M6 6l12 12', 'M18 6 6 18'],
+  copy: ['M9 9h11v11H9z', 'M5 15H4V4h11v1'],
+  check: ['m5 12.5 4.5 4.5L19 7.5'],
 }
 </script>
 

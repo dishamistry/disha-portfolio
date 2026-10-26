@@ -1,17 +1,25 @@
 /**
  * Employment history — source: resume "Work Experience".
  *
- * `start` / `end` use "YYYY-MM" so the list can be sorted reliably;
- * `end: null` means "Present". Entries are sorted newest-first by
- * `sortedExperience`, so the order below does not matter.
+ * Fields used for dates and totals (see src/utils/experience.js):
+ *   - startDate / endDate: "YYYY-MM" (as on the resume) or "YYYY-MM-DD".
+ *     Both months are counted, e.g. "2018-12" → "2019-05" is 6 months.
+ *   - isCurrent: true for an ongoing role; its endDate must be null.
+ *   - countsTowardExperience: set to false to leave a role out of the total.
+ *
+ * Entries are sorted newest-first by `sortedExperience`, so the order below does not matter.
  */
+import { getExperienceTotals, parseMonthIndex } from '@/utils/experience'
+
 export const experience = [
   {
     company: 'Aussie Broadband',
     role: 'Software Engineer Level 3',
     employmentType: '12-month contract · Full-time',
-    start: '2026-01',
-    end: null,
+    startDate: '2026-01',
+    endDate: null,
+    isCurrent: true,
+    countsTowardExperience: true,
     techStack: {
       Backend: ['PHP', 'Laravel 13', 'RESTful APIs'],
       Frontend: ['Vue.js'],
@@ -34,8 +42,10 @@ export const experience = [
     company: 'Sequoia Financial Group',
     role: 'Software Engineer Level 2',
     employmentType: '',
-    start: '2022-12',
-    end: '2026-01',
+    startDate: '2022-12',
+    endDate: '2026-01',
+    isCurrent: false,
+    countsTowardExperience: true,
     techStack: {
       Backend: ['PHP', 'Symfony (3.4 → 5.4)', 'Slim', 'Microservices', 'OAuth2'],
       Frontend: ['Vue.js'],
@@ -59,8 +69,10 @@ export const experience = [
     company: 'Gateway Group of Companies',
     role: 'Senior Software Engineer',
     employmentType: '',
-    start: '2021-04',
-    end: '2022-06',
+    startDate: '2021-04',
+    endDate: '2022-06',
+    isCurrent: false,
+    countsTowardExperience: true,
     techStack: {
       Backend: ['PHP', 'Laravel'],
       Database: ['SQL'],
@@ -81,8 +93,10 @@ export const experience = [
     company: 'AGILE Infoways Pvt. Ltd.',
     role: 'Web Developer',
     employmentType: '',
-    start: '2019-06',
-    end: '2021-03',
+    startDate: '2019-06',
+    endDate: '2021-03',
+    isCurrent: false,
+    countsTowardExperience: true,
     techStack: {
       Backend: ['PHP', 'Laravel', 'CodeIgniter', 'Lumen'],
       Frontend: ['Angular', 'JavaScript', 'jQuery', 'AJAX', 'Bootstrap'],
@@ -103,8 +117,10 @@ export const experience = [
     company: 'ArsenalTech Pvt. Ltd.',
     role: 'Intern',
     employmentType: 'Internship',
-    start: '2018-12',
-    end: '2019-05',
+    startDate: '2018-12',
+    endDate: '2019-05',
+    isCurrent: false,
+    countsTowardExperience: true,
     techStack: {
       Backend: ['PHP', 'Laravel', 'WordPress'],
       Frontend: ['jQuery', 'JavaScript', 'AJAX'],
@@ -120,8 +136,18 @@ export const experience = [
 
 /** Experience sorted newest-first (current roles always on top). */
 export const sortedExperience = [...experience].sort((a, b) => {
-  const endA = a.end ?? '9999-12'
-  const endB = b.end ?? '9999-12'
-  if (endA !== endB) return endB.localeCompare(endA)
-  return b.start.localeCompare(a.start)
+  const endA = a.isCurrent ? Infinity : (parseMonthIndex(a.endDate) ?? -Infinity)
+  const endB = b.isCurrent ? Infinity : (parseMonthIndex(b.endDate) ?? -Infinity)
+  if (endA !== endB) return endB - endA
+  return (parseMonthIndex(b.startDate) ?? 0) - (parseMonthIndex(a.startDate) ?? 0)
 })
+
+/**
+ * Total experience with overlapping months merged. Calculated once when the
+ * page loads, so it moves on automatically each month without code changes.
+ */
+export const experienceTotals = getExperienceTotals(experience)
+
+if (import.meta.env.DEV && !experienceTotals.isComplete) {
+  console.warn('Experience total hidden — check the dates for:', experienceTotals.invalidRoles)
+}

@@ -7,7 +7,7 @@ import ExperienceItem from './ExperienceItem.vue'
 <template>
   <PageSection id="experience" eyebrow="Experience" title="Employment history" muted>
     <ol role="list" class="timeline">
-      <li v-for="job in sortedExperience" :key="`${job.company}-${job.start}`">
+      <li v-for="job in sortedExperience" :key="`${job.company}-${job.startDate}`">
         <ExperienceItem :job="job" />
       </li>
     </ol>

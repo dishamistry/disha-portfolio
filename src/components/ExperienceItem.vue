@@ -1,12 +1,15 @@
 <script setup>
 import { computed } from 'vue'
 import { formatMonth } from '@/utils/dates'
+import { formatDuration, getRoleDuration } from '@/utils/experience'
 
 const props = defineProps({
   job: { type: Object, required: true },
 })
 
-const isCurrent = computed(() => props.job.end === null)
+const isCurrent = computed(() => props.job.isCurrent)
+// Time at this company only (current roles run to this month); '' if its dates are invalid.
+const duration = computed(() => formatDuration(getRoleDuration(props.job)))
 const stackEntries = computed(() => Object.entries(props.job.techStack ?? {}))
 </script>
 
@@ -21,10 +24,16 @@ const stackEntries = computed(() => Object.entries(props.job.techStack ?? {}))
       </div>
       <div class="job__meta">
         <p class="job__period">
-          <time :datetime="job.start">{{ formatMonth(job.start) }}</time>
-          –
-          <time v-if="job.end" :datetime="job.end">{{ formatMonth(job.end) }}</time>
-          <span v-else>Present</span>
+          <span class="job__dates">
+            <time :datetime="job.startDate">{{ formatMonth(job.startDate) }}</time>
+            –
+            <time v-if="!isCurrent && job.endDate" :datetime="job.endDate">{{ formatMonth(job.endDate) }}</time>
+            <span v-else>Present</span>
+          </span>
+          <template v-if="duration">
+            <span aria-hidden="true"> · </span>
+            <span class="job__duration"><span class="visually-hidden">, </span>{{ duration }}</span>
+          </template>
         </p>
         <p v-if="job.employmentType" class="job__type">{{ job.employmentType }}</p>
       </div>
@@ -95,6 +104,11 @@ const stackEntries = computed(() => Object.entries(props.job.techStack ?? {}))
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 500;
+}
+
+/* Keep each part on one line; the two parts may wrap onto separate lines on narrow screens. */
+.job__dates,
+.job__duration {
   white-space: nowrap;
 }
 

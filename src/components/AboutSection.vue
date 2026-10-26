@@ -1,18 +1,22 @@
 <script setup>
 import { profile } from '@/data/profile'
-import { sortedExperience } from '@/data/experience'
+import { sortedExperience, experienceTotals } from '@/data/experience'
 import { formatMonth } from '@/utils/dates'
+import { fillExperiencePlaceholders, formatDuration } from '@/utils/experience'
 import PageSection from './PageSection.vue'
 
-const currentRole = sortedExperience.find((job) => job.end === null)
+const currentRole = sortedExperience.find((job) => job.isCurrent)
 const firstRole = sortedExperience.at(-1)
+const summary = profile.summary.map((paragraph) => fillExperiencePlaceholders(paragraph, experienceTotals))
+// Only shown when every counted role has valid dates.
+const totalExperience = experienceTotals.isComplete ? formatDuration(experienceTotals) : ''
 </script>
 
 <template>
   <PageSection id="about" eyebrow="About" title="Backend-focused, quality-minded">
     <div class="about">
       <div class="about__summary">
-        <p v-for="(paragraph, index) in profile.summary" :key="index">{{ paragraph }}</p>
+        <p v-for="(paragraph, index) in summary" :key="index">{{ paragraph }}</p>
       </div>
 
       <aside class="about__facts card" aria-label="Quick facts">
@@ -25,9 +29,13 @@ const firstRole = sortedExperience.at(-1)
             <dt>Location</dt>
             <dd>{{ profile.location }}</dd>
           </div>
+          <div v-if="totalExperience" class="facts__row">
+            <dt>Professional experience</dt>
+            <dd>{{ totalExperience }}</dd>
+          </div>
           <div v-if="firstRole" class="facts__row">
             <dt>Working in software since</dt>
-            <dd>{{ formatMonth(firstRole.start) }}</dd>
+            <dd>{{ formatMonth(firstRole.startDate) }}</dd>
           </div>
         </dl>
 

@@ -1,11 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import { profile } from '@/data/profile'
-import { sortedExperience } from '@/data/experience'
+import { sortedExperience, experienceTotals } from '@/data/experience'
 import { publicUrl } from '@/utils/assets'
+import { fillExperiencePlaceholders } from '@/utils/experience'
 import BaseIcon from './BaseIcon.vue'
 
-const currentRole = sortedExperience.find((job) => job.end === null)
+const currentRole = sortedExperience.find((job) => job.isCurrent)
+const intro = fillExperiencePlaceholders(profile.intro, experienceTotals)
 
 // If the photo fails to load, drop it so the hero falls back to a single text column.
 const showPhoto = ref(Boolean(profile.photo?.src))
@@ -32,7 +34,7 @@ const showPhoto = ref(Boolean(profile.photo?.src))
         </h1>
 
         <p class="hero__tagline">{{ profile.tagline }}</p>
-        <p class="hero__intro">{{ profile.intro }}</p>
+        <p class="hero__intro">{{ intro }}</p>
 
         <div class="hero__actions">
           <a v-if="profile.email" :href="`mailto:${profile.email}`" class="button button--primary">

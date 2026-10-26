@@ -12,11 +12,11 @@ export const profile = {
 
   // Short introduction used in the hero section.
   intro:
-    'I’m a software engineer with over 7 years of experience in backend development. I build RESTful APIs and microservices, design databases, write automated tests with PHPUnit, and modernise legacy applications.',
+    'I’m a software engineer with {experienceYears} of experience in backend development. I build RESTful APIs and microservices, design databases, write automated tests with PHPUnit, and modernise legacy applications.',
 
   // Longer professional summary used in the About section (one string per paragraph).
   summary: [
-    'I’m a software engineer with 7 years and 7 months of experience in backend development, primarily using PHP, Laravel, Symfony and SQL. My work centres on developing RESTful APIs and microservices, database design, automated testing with PHPUnit, and modernising legacy applications.',
+    'I’m a software engineer with {experienceDuration} of experience in backend development, primarily using PHP, Laravel, Symfony and SQL. My work centres on developing RESTful APIs and microservices, database design, automated testing with PHPUnit, and modernising legacy applications.',
     'I’m familiar with frontend technologies including Vue.js and Angular, and with development tools such as Docker, Git and Grafana. I have working knowledge of AWS cloud services.',
     'I currently use Claude Code to support everyday development tasks, reviewing AI-generated code for correctness, maintainability and alignment with project requirements. Outside of work, I’m expanding my backend expertise through hands-on projects using Go, gRPC and Protocol Buffers.',
     'I’m experienced in Agile environments and collaborative code reviews, and I care about delivering maintainable software.',

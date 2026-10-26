@@ -48,7 +48,8 @@ src/
 
 The files in `src/data/` are the **single source of truth**. Components only read from them, so you never need to edit a `.vue` file to update your content.
 
-- **Add a job**: add an object to `experience` in `experience.js`. Use `"YYYY-MM"` for `start`/`end`, and `end: null` for a current role. The list is sorted newest-first automatically.
+- **Add a job**: add an object to `experience` in `experience.js` with `startDate`/`endDate` as `"YYYY-MM"` (or `"YYYY-MM-DD"`). For a current role, use `endDate: null` and `isCurrent: true`. Set `countsTowardExperience: false` to leave a role out of the total. The list is sorted newest-first automatically.
+- **Experience totals are calculated, never typed in**: the overall total (with overlapping months merged) and each role's duration are worked out from those dates every time the page loads, so they move on each month by themselves. In `profile.js` text, `{experienceYears}` becomes e.g. "7+ years" and `{experienceDuration}` becomes e.g. "7 years and 6 months". If any counted role has an invalid date, the site shows "several years" instead of a possibly wrong number.
 - **Add a project**: add an object to `projects.js`. Use `type: 'personal'` or `type: 'learning'`, and set `featured: false` to hide a project without deleting it.
 - **Add skills**: edit the `skills` arrays in `skills.js`. Groups with `context: 'learning'` are marked "In progress".
 
